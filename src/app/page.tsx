@@ -1,52 +1,94 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/src/components/ui/dialog';
+import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/src/components/ui/item';
+import { createRsvpValidation, createWishValidation } from '@/src/validations/app.vaidation';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+
+import { Avatar, AvatarFallback } from '../components/ui/avatar';
+import ContentBride from './_components/content-bride';
+import ContentClosing from './_components/content-closing';
+import ContentDate from './_components/content-date';
+import ContentGift from './_components/content-gift';
+import ContentGroom from './_components/content-groom';
+import ContentIntro from './_components/content-intro';
+import ContentPray from './_components/content-pray';
+import ContentRsvp from './_components/content-rsvp';
+import ContentStory from './_components/content-story';
+import LayoutMobile from './_components/layout-mobile';
+import ContentOpening from './_components/opening';
 
 export default function Home() {
-	return (
-		<div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-			<main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-				<Image className="dark:invert" src="/next.svg" alt="Next.js logo" width={180} height={38} priority />
-				<ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-					<li className="mb-2 tracking-[-.01em]">
-						Get started by editing{" "}
-						<code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-							src/app/page.tsx
-						</code>
-						.
-					</li>
-					<li className="tracking-[-.01em]">Save and see your changes instantly.</li>
-				</ol>
+  const [showWishes, setShowWishes] = useState(false);
 
-				<div className="flex gap-4 items-center flex-col sm:flex-row">
-					<a
-						className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-						href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Read our docs
-					</a>
-				</div>
-			</main>
-			<footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-				<a
-					className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-					href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<Image aria-hidden src="/file.svg" alt="File icon" width={16} height={16} />
-					Learn
-				</a>
-				<a
-					className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-					href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<Image aria-hidden src="/globe.svg" alt="Globe icon" width={16} height={16} />
-					Go to nextjs.org →
-				</a>
-			</footer>
-		</div>
-	);
+  const formRsvp = useForm({
+    resolver: yupResolver(createRsvpValidation),
+    defaultValues: {
+      name: '',
+      status: 0,
+    },
+  });
+  const submitHandlerRsvp = (data: any) => {
+    console.log('onSubmitRsvp', data);
+  };
+
+  const formWish = useForm({
+    resolver: yupResolver(createWishValidation),
+    defaultValues: {
+      name: '',
+      message: '',
+    },
+  });
+  const submitHandlerWish = (data: any) => {
+    console.log('onSubmitWish', data);
+  };
+
+  return (
+    <LayoutMobile>
+      <ContentOpening />
+      <ContentIntro />
+      <ContentBride />
+      <ContentGroom />
+      <ContentDate />
+      <ContentStory />
+      <ContentRsvp form={formRsvp} submitHandler={submitHandlerRsvp} />
+      <ContentGift />
+      <ContentPray
+        form={formWish}
+        submitHandler={submitHandlerWish}
+        onClickSee={() => setShowWishes(true)}
+      />
+      <ContentClosing />
+
+      <Dialog open={showWishes} onOpenChange={setShowWishes}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Menampilkan Ucapan</DialogTitle>
+          </DialogHeader>
+          <hr className="opacity-30" />
+
+          <ul>
+            <Item variant="outline">
+              <ItemMedia>
+                <Avatar className="size-10">
+                  <AvatarFallback>ER</AvatarFallback>
+                </Avatar>
+              </ItemMedia>
+              <ItemContent>
+                <ItemTitle>Evil Rabbit</ItemTitle>
+                <ItemDescription className="text-[12px]">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum sed ratione
+                  tempore veniam deleniti animi. Non modi ipsam similique porro!
+                </ItemDescription>
+                <div className="text-[10px]">20 Mei 2026</div>
+              </ItemContent>
+            </Item>
+          </ul>
+        </DialogContent>
+      </Dialog>
+    </LayoutMobile>
+  );
 }
