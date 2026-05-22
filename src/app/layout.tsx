@@ -60,7 +60,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="32x32" />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
-      <body className={`${poppins.variable} ${histeagin.variable} antialiased`}>
+      <body className={`${poppins.variable} ${histeagin.variable} antialiased w-full h-full bg-[#2C4037]`}>
         {children}
         <Toaster richColors position="top-center" />
       </body>

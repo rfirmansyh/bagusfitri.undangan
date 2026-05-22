@@ -8,7 +8,7 @@ const ContentClosing = () => {
     <section id="content-closing" className="relative h-full w-full text-[#EEF1F0]!">
       <div className="relative h-full w-full overflow-hidden text-[#EEF1F0]!">
         <Image
-          fill
+          loading="lazy"
           src={ImgClosing}
           alt="Closing"
           className="absolute inset-0 h-full w-full object-cover!"

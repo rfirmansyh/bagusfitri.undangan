@@ -12,11 +12,11 @@ export const DATA = {
   PLACE_AKAD_LABEL: 'KUA Sumbersari',
   PLACE_AKAD_DETAIL:
     'Jl. Bengawan Solo No.2, Tegal Boto Lor, Sumbersari, Kec. Sumbersari, Kabupaten Jember, Jawa Timur 68124',
-  PLACE_AKAD_MAPS: 'https://share.google/qH0HrkknuddyCbWX7',
+  PLACE_AKAD_MAPS: 'https://maps.app.goo.gl/ZSdKh7mWSv8UaC1v6',
 
   PLACE_RECEPTION_DETAIL:
     'Gang Doho Perumahan Bukit Permai blok i13, Kec. Sumbersari, Kabupaten Jember, Jawa Timur 68124',
-  PLACE_RECEPTION_MAPS: 'https://share.google/qH0HrkknuddyCbWX7',
+  PLACE_RECEPTION_MAPS: 'https://maps.app.goo.gl/2iAhTYLHpM3dVnQFA',
 
   PLACE_GIFT:
     'Gang Doho Perumahan Bukit Permai blok i13, Kec. Sumbersari, Kabupaten Jember, Jawa Timur 68124',
@@ -24,10 +24,12 @@ export const DATA = {
   GROOM: {
     shortName: 'Bagus',
     fullName: 'Bagus Firman Fahreza',
+    igAccount: 'sugabackk'
   },
   BRIDE: {
     shortName: 'Pipit',
     fullName: 'Nurul Ismi Fitrianty',
+    igAccount: 'niflooo',
   },
 
   BANKS: [

@@ -2,7 +2,7 @@
 
 import { ReactNode, Ref, useEffect } from 'react';
 
-const LayoutMobile = ({ ref, children }: { ref: Ref<HTMLDivElement>, children: ReactNode }) => {
+const LayoutMobile = ({ ref, children }: { ref?: Ref<HTMLDivElement>, children: ReactNode }) => {
   useEffect(() => {
     const resizeWorkspace = function resizeWorkspace() {
       console.log('resizing');

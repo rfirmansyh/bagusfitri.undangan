@@ -11,7 +11,7 @@ const ContentStory = () => {
       className="relative h-full w-full bg-[#2C4037] text-center text-white!"
     >
       <Image
-        fill
+        loading='lazy'
         src={ImgStory}
         alt="Story"
         className="absolute inset-0 h-full w-full object-cover!"

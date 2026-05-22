@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image';
 
 import ImgGift from '@/public/images/gift.png';
@@ -14,7 +16,7 @@ const ContentGift = () => {
         <h2 className="font-mono text-[24px]">Love Gift</h2>
 
         <div className="relative h-[191px] w-[312px]">
-          <Image fill src={ImgGift} alt="" style={{ objectFit: 'contain' }} />
+          <Image loading='lazy' src={ImgGift} alt="" style={{ objectFit: 'contain' }} />
         </div>
 
         <p className="mx-auto max-w-[280px] font-sans text-[12px]">
@@ -38,9 +40,7 @@ const ContentGift = () => {
                   />
                 </div>
                 <div className="grow text-left">
-                  <div className="text-[10px] font-medium">
-                    {bank.label}: {bank.number}
-                  </div>
+                  <div className="text-[10px] font-medium">{bank.label}: {bank.number}</div>
                   <div className="text-[10px] font-light">a.n. {bank.holderName}</div>
                 </div>
                 <ButtonCopy value={bank.number} />

@@ -13,19 +13,58 @@ import { toast } from 'sonner';
 
 import { Avatar, AvatarFallback } from '../components/ui/avatar';
 import { Button } from '../components/ui/button';
-import ContentBride from './_components/content-bride';
-import ContentClosing from './_components/content-closing';
-import ContentDate from './_components/content-date';
-import ContentGift from './_components/content-gift';
-import ContentGroom from './_components/content-groom';
-import ContentIntro from './_components/content-intro';
-import ContentPray from './_components/content-pray';
-import ContentRsvp from './_components/content-rsvp';
-import ContentStory from './_components/content-story';
+// import ContentBride from './_components/content-bride';
+// import ContentClosing from './_components/content-closing';
+// import ContentDate from './_components/content-date';
+// import ContentGift from './_components/content-gift';
+// import ContentGroom from './_components/content-groom';
+// import ContentIntro from './_components/content-intro';
+// import ContentPray from './_components/content-pray';
+// import ContentRsvp from './_components/content-rsvp';
+// import ContentStory from './_components/content-story';
 import LayoutMobile from './_components/layout-mobile';
 import ContentOpening from './_components/opening';
 import { useGSAP } from '@gsap/react';
 import gsap from "gsap";
+import { QueryClient, QueryClientProvider, useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import dynamic from 'next/dynamic';
+
+const ContentIntro = dynamic(() => import('./_components/content-intro'), {
+  ssr: false,
+  loading: () => <div className="flex h-full w-full items-center justify-center">Loading...</div>,
+});
+const ContentBride = dynamic(() => import('./_components/content-bride'), {
+  ssr: false,
+  loading: () => <div className="flex h-full w-full items-center justify-center">Loading...</div>,
+});
+const ContentGroom = dynamic(() => import('./_components/content-groom'), {
+  ssr: false,
+  loading: () => <div className="flex h-full w-full items-center justify-center">Loading...</div>,
+});
+const ContentDate = dynamic(() => import('./_components/content-date'), {
+  ssr: false,
+  loading: () => <div className="flex h-full w-full items-center justify-center">Loading...</div>,
+});
+const ContentStory = dynamic(() => import('./_components/content-story'), {
+  ssr: false,
+  loading: () => <div className="flex h-full w-full items-center justify-center">Loading...</div>,
+});
+const ContentRsvp = dynamic(() => import('./_components/content-rsvp'), {
+  ssr: false,
+  loading: () => <div className="flex h-full w-full items-center justify-center">Loading...</div>,
+});
+const ContentGift = dynamic(() => import('./_components/content-gift'), {
+  ssr: false,
+  loading: () => <div className="flex h-full w-full items-center justify-center">Loading...</div>,
+});
+const ContentPray = dynamic(() => import('./_components/content-pray'), {
+  ssr: false,
+  loading: () => <div className="flex h-full w-full items-center justify-center">Loading...</div>,
+});
+const ContentClosing = dynamic(() => import('./_components/content-closing'), {
+  ssr: false,
+  loading: () => <div className="flex h-full w-full items-center justify-center">Loading...</div>,
+});
 
 gsap.registerPlugin(useGSAP);
 
@@ -37,16 +76,32 @@ function formatWishDate(value: string) {
   }).format(new Date(value));
 }
 
+// Create a single QueryClient instance
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
 export default function Home() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <HomeContent />
+    </QueryClientProvider>
+  );
+}
+
+function HomeContent() {
   const audio = useRef<HTMLAudioElement>(null!);
-  const containerRef = useRef<HTMLDivElement>(null!)
+  const containerRef = useRef<HTMLDivElement>(null!);
 
   const [isOpened, setIsOpened] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showWishes, setShowWishes] = useState(false);
-  const [publicWishes, setPublicWishes] = useState<TPublicWish[]>([]);
-  const [loadingWishes, setLoadingWishes] = useState(false);
-  const [hasMoreWishes, setHasMoreWishes] = useState(false);
+
+  const queryClientInstance = useQueryClient();
 
   // ─── RSVP Form ──────────────────────────────────────────────
   const formRsvp = useForm<TCreateRsvpForm>({
@@ -104,41 +159,45 @@ export default function Home() {
       toast.success('Ucapan berhasil dikirim! Terima kasih.');
       formWish.reset();
 
-      // Prepend new wish to the list if dialog is open
-      if (json.data) {
-        setPublicWishes((prev) => [json.data!, ...prev]);
-      }
+      // Refetch wishes query cache to instantly show the updated list
+      queryClientInstance.invalidateQueries({ queryKey: ['wishes'] });
     } catch {
       toast.error('Gagal terhubung ke server.');
     }
   };
 
-  // ─── Fetch Public Wishes ───────────────────────────────────
-  const fetchWishes = useCallback(async (offset = 0) => {
-    setLoadingWishes(true);
-    try {
-      const res = await fetch(`/api/wishes?offset=${offset}`);
+  // ─── React Query Infinite Query for Wishes ───────────────────
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useInfiniteQuery({
+    queryKey: ['wishes'],
+    queryFn: async ({ pageParam = 0 }) => {
+      const res = await fetch(`/api/wishes?offset=${pageParam}`);
       const json: TApiResponse<{ wishes: TPublicWish[]; hasMore: boolean }> =
         await res.json();
 
-      if (json.success && json.data) {
-        if (offset === 0) {
-          setPublicWishes(json.data.wishes);
-        } else {
-          setPublicWishes((prev) => [...prev, ...json.data!.wishes]);
-        }
-        setHasMoreWishes(json.data.hasMore);
+      if (!json.success || !json.data) {
+        throw new Error(json.error ?? 'Gagal memuat ucapan.');
       }
-    } catch {
-      // Silent fail for public fetch
-    } finally {
-      setLoadingWishes(false);
-    }
-  }, []);
+      return json.data;
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      if (!lastPage.hasMore) return undefined;
+      return allPages.reduce((sum, page) => sum + page.wishes.length, 0);
+    },
+    enabled: showWishes,
+  });
 
-  const { contextSafe } = useGSAP(() => {
+  const publicWishes = data?.pages.flatMap((page) => page.wishes) ?? [];
+  const loadingWishes = isLoading || isFetchingNextPage;
+  const hasMoreWishes = hasNextPage;
 
-  }, { scope: containerRef });
+  const { contextSafe } = useGSAP(() => {}, { scope: containerRef });
 
   const handlePlay = () => {
     if (isPlaying) {
@@ -149,26 +208,39 @@ export default function Home() {
       setIsPlaying(true);
     }
   };
+
+  const openFullScreen = () => {
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+      // @ts-ignore
+    } else if (document.documentElement.webkitRequestFullscreen) {
+      // @ts-ignore
+      document.documentElement.webkitRequestFullscreen();
+      // @ts-ignore
+    } else if (document.documentElement.msRequestFullscreen) {
+      // @ts-ignore
+      document.documentElement.msRequestFullscreen();
+    }
+  };
+
   const handleOpen = contextSafe(() => {
+    if (navigator.userAgent.indexOf("UCBrowser") != -1 || navigator.userAgent.indexOf("MiuiBrowser") != -1 || navigator.userAgent.includes("OppoBrowser") || navigator.userAgent.includes("HeyTapBrowser")) {
+      console.log("Browser not support portrait full screen mode");
+    } else {
+      openFullScreen();
+    }
+
     gsap.to('#content-opening', {
       yPercent: -100,
       onComplete: () => {
         setIsOpened(true);
-        handlePlay()
+        handlePlay();
 
         const canvas = document.getElementById('canvas');
         if (canvas) canvas.style.overflowY = 'auto';
-
-        // gsap.set("#canvas", {autoAlpha: 0, overflowY: 'auto'})
       },
-    })
-  })
-
-  useEffect(() => {
-    if (showWishes) {
-      fetchWishes(0);
-    }
-  }, [showWishes, fetchWishes]);
+    });
+  });
 
   return (
     <LayoutMobile ref={containerRef}>
@@ -188,8 +260,9 @@ export default function Home() {
       <ContentClosing />
 
       <audio ref={audio} className="hidden opacity-0 w-0 h-0">
-        <source src="/audio.mp3" type="audio/mp3" />
+        <source src="/audio.mpeg" type="audio/mpeg" />
       </audio>
+
       <Dialog open={showWishes} onOpenChange={setShowWishes}>
         <DialogContent>
           <DialogHeader>
@@ -228,7 +301,7 @@ export default function Home() {
                 variant="outline"
                 size="sm"
                 disabled={loadingWishes}
-                onClick={() => fetchWishes(publicWishes.length)}
+                onClick={() => fetchNextPage()}
                 className="mt-2"
               >
                 {loadingWishes ? 'Memuat...' : 'Muat Lagi'}
