@@ -7,12 +7,12 @@ export const DATA = {
   PLACE_HELD: 'Jember',
   DATE_HELD: '2026-05-29',
   AKAD_TIME: '08:00 WIB',
-  RECEPTION_TIME: '14.00 - 06.00 WIB',
+  RECEPTION_TIME: '14.00 - 16.00 WIB',
 
   PLACE_AKAD_LABEL: 'KUA Sumbersari',
   PLACE_AKAD_DETAIL:
     'Jl. Bengawan Solo No.2, Tegal Boto Lor, Sumbersari, Kec. Sumbersari, Kabupaten Jember, Jawa Timur 68124',
-  PLACE_AKAD_MAPS: 'https://maps.app.goo.gl/ZSdKh7mWSv8UaC1v6',
+  PLACE_AKAD_MAPS: 'https://maps.app.goo.gl/wu4q4aq8ZgTy4PY6A',
 
   PLACE_RECEPTION_DETAIL:
     'Gang Doho Perumahan Bukit Permai blok i13, Kec. Sumbersari, Kabupaten Jember, Jawa Timur 68124',
