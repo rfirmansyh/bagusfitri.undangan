@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/src/components/ui/dialog';
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/src/components/ui/item';
@@ -10,7 +10,7 @@ import type { TCreateRsvpForm, TCreateWishForm } from '@/src/validations/app.val
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-
+import { Disc3, VolumeX } from 'lucide-react';
 import { Avatar, AvatarFallback } from '../components/ui/avatar';
 import { Button } from '../components/ui/button';
 import ContentBride from './_components/content-bride';
@@ -223,122 +223,122 @@ function HomeContent() {
       ease: 'sine.inOut',
     });
 
-    gsap.set('#content-bride-img', {
-      opacity: 0,
-      xPercent: -140,
-    })
-    gsap.to('#content-bride-img', {
-      scrollTrigger: {
-        trigger: '#content-bride',
-        start: 'top 90%',
-        scroller: '#canvas',
-        // toggleActions: 'play none none reverse',
-      },
-      duration: 1,
-      xPercent: 0,
-      opacity: 1,
-      ease: 'power2.out',
-    });
-    gsap.set('#content-bride-text', {
-      opacity: 0,
-      yPercent: 140,
-    })
-    gsap.to('#content-bride-text', {
-      scrollTrigger: {
-        trigger: '#content-bride',
-        start: 'top 50%',
-        scroller: '#canvas',
-        // toggleActions: 'play none none reverse',
-      },
-      duration: 1,
-      yPercent: 0,
-      opacity: 1,
-      ease: 'power2.out',
-    });
+    // gsap.set('#content-bride-img', {
+    //   opacity: 0,
+    //   xPercent: -140,
+    // })
+    // gsap.to('#content-bride-img', {
+    //   scrollTrigger: {
+    //     trigger: '#content-bride',
+    //     start: 'top 90%',
+    //     scroller: '#canvas',
+    //     // toggleActions: 'play none none reverse',
+    //   },
+    //   duration: 1,
+    //   xPercent: 0,
+    //   opacity: 1,
+    //   ease: 'power2.out',
+    // });
+    // gsap.set('#content-bride-text', {
+    //   opacity: 0,
+    //   yPercent: 140,
+    // })
+    // gsap.to('#content-bride-text', {
+    //   scrollTrigger: {
+    //     trigger: '#content-bride',
+    //     start: 'top 50%',
+    //     scroller: '#canvas',
+    //     // toggleActions: 'play none none reverse',
+    //   },
+    //   duration: 1,
+    //   yPercent: 0,
+    //   opacity: 1,
+    //   ease: 'power2.out',
+    // });
 
-    gsap.set('#content-groom-img', {
-      opacity: 0,
-      xPercent: 140,
-    })
-    gsap.to('#content-groom-img', {
-      scrollTrigger: {
-        trigger: '#content-groom',
-        start: 'top 100%',
-        scroller: '#canvas',
-        // toggleActions: 'play none none reverse',
-      },
-      duration: 1,
-      xPercent: 0,
-      opacity: 1,
-      ease: 'power2.out',
-    });
-    gsap.set('#content-groom-text', {
-      opacity: 0,
-      yPercent: 140,
-    })
-    gsap.to('#content-groom-text', {
-      scrollTrigger: {
-        trigger: '#content-groom',
-        start: 'top 100%',
-        scroller: '#canvas',
-        // toggleActions: 'play none none reverse',
-      },
-      duration: 1,
-      yPercent: 0,
-      opacity: 1,
-      ease: 'power2.out',
-    });
+    // gsap.set('#content-groom-img', {
+    //   opacity: 0,
+    //   xPercent: 140,
+    // })
+    // gsap.to('#content-groom-img', {
+    //   scrollTrigger: {
+    //     trigger: '#content-groom',
+    //     start: 'top 100%',
+    //     scroller: '#canvas',
+    //     // toggleActions: 'play none none reverse',
+    //   },
+    //   duration: 1,
+    //   xPercent: 0,
+    //   opacity: 1,
+    //   ease: 'power2.out',
+    // });
+    // gsap.set('#content-groom-text', {
+    //   opacity: 0,
+    //   yPercent: 140,
+    // })
+    // gsap.to('#content-groom-text', {
+    //   scrollTrigger: {
+    //     trigger: '#content-groom',
+    //     start: 'top 100%',
+    //     scroller: '#canvas',
+    //     // toggleActions: 'play none none reverse',
+    //   },
+    //   duration: 1,
+    //   yPercent: 0,
+    //   opacity: 1,
+    //   ease: 'power2.out',
+    // });
 
-    gsap.set('#dec-story', {
-      x: 50,
-      opacity: 0,
-    })
-    gsap.to('#dec-story', {
-      x: 0,
-      opacity: 1,
-      duration: 1.2,
-      ease: 'sine.inOut',
-      scrollTrigger: {
-        trigger: '#content-story',
-        start: 'top 200%',
-        scroller: '#canvas',
-        toggleActions: 'play none none reverse',
-      },
-    });
+    // gsap.set('#dec-story', {
+    //   x: 50,
+    //   opacity: 0,
+    // })
+    // gsap.to('#dec-story', {
+    //   x: 0,
+    //   opacity: 1,
+    //   duration: 1.2,
+    //   ease: 'sine.inOut',
+    //   scrollTrigger: {
+    //     trigger: '#content-story',
+    //     start: 'top 200%',
+    //     scroller: '#canvas',
+    //     toggleActions: 'play none none reverse',
+    //   },
+    // });
 
-    gsap.set('#img-rsvp', {
-      yPercent: 50,
-      opacity: 0,
-    })
-    gsap.to('#img-rsvp', {
-      yPercent: 0,
-      opacity: 1,
-      duration: 1.2,
-      ease: 'sine.inOut',
-      scrollTrigger: {
-        trigger: '#content-rsvp',
-        start: 'top 300%',
-        scroller: '#canvas',
-        toggleActions: 'play none none reverse',
-      },
-    });
+    // gsap.set('#img-rsvp', {
+    //   yPercent: 50,
+    //   opacity: 0,
+    // })
+    // gsap.to('#img-rsvp', {
+    //   yPercent: 0,
+    //   opacity: 1,
+    //   duration: 1.2,
+    //   ease: 'sine.inOut',
+    //   scrollTrigger: {
+    //     trigger: '#content-rsvp',
+    //     start: 'top 300%',
+    //     scroller: '#canvas',
+    //     toggleActions: 'play none none reverse',
+    //   },
+    // });
 
-    gsap.set('#img-love', {
-      yPercent: 50,
-      opacity: 0,
-    })
-    gsap.to('#img-love', {
-      yPercent: 0,
-      opacity: 1,
-      duration: 1.2,
-      ease: 'sine.inOut',
-      scrollTrigger: {
-        trigger: '#content-gift',
-        start: 'top 400%',
-        scroller: '#canvas',
-        toggleActions: 'play none none reverse',
-      },
-    });
+    // gsap.set('#img-love', {
+    //   yPercent: 50,
+    //   opacity: 0,
+    // })
+    // gsap.to('#img-love', {
+    //   yPercent: 0,
+    //   opacity: 1,
+    //   duration: 1.2,
+    //   ease: 'sine.inOut',
+    //   scrollTrigger: {
+    //     trigger: '#content-gift',
+    //     start: 'top 400%',
+    //     scroller: '#canvas',
+    //     toggleActions: 'play none none reverse',
+    //   },
+    // });
 
     gsap.to('#img-pray', {
       rotation: 'random(-2, 2)',
@@ -347,22 +347,22 @@ function HomeContent() {
       repeatRefresh: true,
     });
 
-    gsap.set('#img-closing', {
-      yPercent: -50,
-      opacity: 0,
-    })
-    gsap.to('#img-closing', {
-      yPercent: 0,
-      opacity: 1,
-      duration: 1.2,
-      ease: 'sine.inOut',
-      scrollTrigger: {
-        trigger: '#content-closing',
-        start: 'top 450%',
-        scroller: '#canvas',
-        toggleActions: 'play none none reverse',
-      },
-    });
+    // gsap.set('#img-closing', {
+    //   yPercent: -50,
+    //   opacity: 0,
+    // })
+    // gsap.to('#img-closing', {
+    //   yPercent: 0,
+    //   opacity: 1,
+    //   duration: 1.2,
+    //   ease: 'sine.inOut',
+    //   scrollTrigger: {
+    //     trigger: '#content-closing',
+    //     start: 'top 450%',
+    //     scroller: '#canvas',
+    //     toggleActions: 'play none none reverse',
+    //   },
+    // });
   }, { scope: containerRef });
 
   const handlePlay = () => {
@@ -413,73 +413,93 @@ function HomeContent() {
 
 
   return (
-    <LayoutMobile ref={containerRef}>
-      <ContentOpening guestName={searchParams.get('kepada') || 'Tamu Undangan'} onClick={handleOpen} />
-      <ContentIntro />
-      <ContentBride />
-      <ContentGroom />
-      <ContentDate />
-      <ContentStory />
-      <ContentRsvp form={formRsvp} submitHandler={submitHandlerRsvp} />
-      <ContentGift />
-      <ContentPray
-        form={formWish}
-        submitHandler={submitHandlerWish}
-        onClickSee={() => setShowWishes(true)}
-      />
-      <ContentClosing />
+    <Fragment>
+      <LayoutMobile ref={containerRef}>
+        <ContentOpening guestName={searchParams.get('kepada') || 'Tamu Undangan'} onClick={handleOpen} />
+        <ContentIntro />
+        <ContentBride />
+        <ContentGroom />
+        <ContentDate />
+        <ContentStory />
+        <ContentRsvp form={formRsvp} submitHandler={submitHandlerRsvp} />
+        <ContentGift />
+        <ContentPray
+          form={formWish}
+          submitHandler={submitHandlerWish}
+          onClickSee={() => setShowWishes(true)}
+        />
+        <ContentClosing />
 
-      <audio ref={audio} className="hidden opacity-0 w-0 h-0">
-        <source src="/audio.mpeg" type="audio/mpeg" />
-      </audio>
+        <audio ref={audio} className="hidden opacity-0 w-0 h-0">
+          <source src="/audio.mpeg" type="audio/mpeg" />
+        </audio>
 
-      <Dialog open={showWishes} onOpenChange={setShowWishes}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Menampilkan Ucapan</DialogTitle>
-          </DialogHeader>
-          <hr className="opacity-30" />
+        <Dialog open={showWishes} onOpenChange={setShowWishes}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Menampilkan Ucapan</DialogTitle>
+            </DialogHeader>
+            <hr className="opacity-30" />
 
-          <ul className="flex max-h-[60vh] flex-col gap-2 overflow-y-auto">
-            {publicWishes.length === 0 && !loadingWishes && (
-              <p className="py-4 text-center text-sm text-muted-foreground">
-                Belum ada ucapan.
-              </p>
-            )}
-            {publicWishes.map((wish) => (
-              <Item key={wish.id} variant="outline">
-                <ItemMedia>
-                  <Avatar className="size-10">
-                    <AvatarFallback>
-                      {wish.name.slice(0, 2).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                </ItemMedia>
-                <ItemContent>
-                  <ItemTitle>{wish.name}</ItemTitle>
-                  <ItemDescription className="text-[12px]">
-                    {wish.message}
-                  </ItemDescription>
-                  <div className="text-[10px]">
-                    {formatWishDate(wish.createdAt)}
-                  </div>
-                </ItemContent>
-              </Item>
-            ))}
-            {hasMoreWishes && (
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={loadingWishes}
-                onClick={() => fetchNextPage()}
-                className="mt-2"
-              >
-                {loadingWishes ? 'Memuat...' : 'Muat Lagi'}
-              </Button>
-            )}
-          </ul>
-        </DialogContent>
-      </Dialog>
-    </LayoutMobile>
+            <ul className="flex max-h-[60vh] flex-col gap-2 overflow-y-auto">
+              {publicWishes.length === 0 && !loadingWishes && (
+                <p className="py-4 text-center text-sm text-muted-foreground">
+                  Belum ada ucapan.
+                </p>
+              )}
+              {publicWishes.map((wish) => (
+                <Item key={wish.id} variant="outline">
+                  <ItemMedia>
+                    <Avatar className="size-10">
+                      <AvatarFallback>
+                        {wish.name.slice(0, 2).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </ItemMedia>
+                  <ItemContent>
+                    <ItemTitle>{wish.name}</ItemTitle>
+                    <ItemDescription className="text-[12px]">
+                      {wish.message}
+                    </ItemDescription>
+                    <div className="text-[10px]">
+                      {formatWishDate(wish.createdAt)}
+                    </div>
+                  </ItemContent>
+                </Item>
+              ))}
+              {hasMoreWishes && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={loadingWishes}
+                  onClick={() => fetchNextPage()}
+                  className="mt-2"
+                >
+                  {loadingWishes ? 'Memuat...' : 'Muat Lagi'}
+                </Button>
+              )}
+            </ul>
+          </DialogContent>
+        </Dialog>
+      </LayoutMobile>
+
+      {isOpened ? (
+        <button
+          className={`fixed bottom-6 right-[15px] md:right-6 z-50 flex h-10 md:h-[56px] w-10 md:w-[56px] items-center justify-center rounded-full bg-slate-900/40 shadow-xl backdrop-blur-md border border-white/20 text-white transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer ${
+            isPlaying ? 'shadow-[0_0_20px_rgba(255,255,255,0.4)]' : ''
+          }`}
+          onClick={handlePlay}
+          type="button"
+          aria-label={isPlaying ? 'Pause music' : 'Play music'}
+        >
+          <Disc3 className={`h-6 md:h-[48px] w-6 md:w-[48px] transition-all duration-700 ${isPlaying ? 'animate-[spin_3s_linear_infinite]' : 'opacity-60'}`} />
+          {!isPlaying && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="h-0.5 w-10 -rotate-45 bg-white/80 rounded-full" />
+            </div>
+          )}
+        </button>
+      ) : null}
+    </Fragment>
   );
 }

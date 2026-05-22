@@ -1,21 +1,11 @@
-import { getCloudflareContext } from '@opennextjs/cloudflare';
-
 /**
  * Get the admin password from Cloudflare context or process.env.
  */
 export async function getAdminPassword(): Promise<string> {
-  if (process.env.ADMIN_PASSWORD) {
-    return process.env.ADMIN_PASSWORD;
+  if ((process.env as any)?.ADMIN_PASSWORD) {
+    return (process.env as any)?.ADMIN_PASSWORD;
   }
-  try {
-    const { env } = await getCloudflareContext({ async: true });
-    if (env) {
-      return (env as Record<string, unknown>)['ADMIN_PASSWORD'] as string;
-    }
-    throw new Error('Password admin tidak valid');
-  } catch {
-    throw new Error('Password admin tidak valid');
-  }
+  throw new Error('Password admin tidak valid');
 }
 
 /**

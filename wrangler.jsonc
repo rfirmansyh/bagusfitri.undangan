@@ -43,7 +43,7 @@
 			"database_id": "85dd3f33-eac1-4d2c-88ef-87b1a3c4a3a9",
 			"migrations_dir": "migrations"
 		}
-	]
+	],
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
@@ -61,5 +61,7 @@
 	 * Note: Use secrets to store sensitive data.
 	 * https://developers.cloudflare.com/workers/configuration/secrets/
 	 */
-	// "vars": {  "MY_VARIABLE": "production_value" }
+	"secrets": {
+    "required": ["ADMIN_PASSWORD"]
+  }
 }

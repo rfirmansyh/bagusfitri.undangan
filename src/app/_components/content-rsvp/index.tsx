@@ -59,6 +59,8 @@ const ContentRsvp = ({ form, submitHandler }: ContentRsvpProps) => {
                       <SelectItem value="0">Tidak Hadir</SelectItem>
                       <SelectItem value="1">1 Orang</SelectItem>
                       <SelectItem value="2">2 Orang</SelectItem>
+                      <SelectItem value="3">3 Orang</SelectItem>
+                      <SelectItem value="4">4 Orang</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
