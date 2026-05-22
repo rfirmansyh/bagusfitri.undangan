@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { password } = body as { password?: string };
 
-    if (!password || !isAdminPasswordValid(password)) {
+    if (!password || !(await isAdminPasswordValid(password))) {
       return NextResponse.json<TApiResponse>(
         { success: false, error: 'Password tidak valid.' },
         { status: 401 },

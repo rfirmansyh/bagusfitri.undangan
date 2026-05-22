@@ -4,6 +4,7 @@ export const DATA = {
     'Merupakan sebuah kehormatan dan kebahagiaan bagi kami jika Bapak/Ibu /Saudara/i berkenan hadir dan memberikan doa restu bagi kami',
 
   COUPLE_NAME: 'Bagus dan Pipit',
+  COUPLE_NAME_FORMAL: 'Bagus dan Fitri',
   PLACE_HELD: 'Jember',
   DATE_HELD: '2026-05-29',
   AKAD_TIME: '08:00 WIB',

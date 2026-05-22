@@ -117,10 +117,11 @@ function HomeContent() {
 
   const submitHandlerWish = async (data: TCreateWishForm) => {
     try {
+      const signature = searchParams.get('s') ?? undefined;
       const res = await fetch('/api/wishes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, signature }),
       });
       const json: TApiResponse<TPublicWish> = await res.json();
 

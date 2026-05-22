@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const password = searchParams.get('password') ?? '';
-    assertAdminPassword(password);
+    await assertAdminPassword(password);
 
     const page = Math.max(1, Number(searchParams.get('page') ?? 1));
     const db = await getD1Database();
@@ -85,7 +85,7 @@ export async function DELETE(request: NextRequest) {
     const body = await request.json();
     const { password, id } = body as { password?: string; id?: string };
 
-    assertAdminPassword(password ?? '');
+    await assertAdminPassword(password ?? '');
 
     if (!id) {
       return NextResponse.json<TApiResponse>(
@@ -125,7 +125,7 @@ export async function PATCH(request: NextRequest) {
       hidden?: boolean;
     };
 
-    assertAdminPassword(password ?? '');
+    await assertAdminPassword(password ?? '');
 
     if (!id) {
       return NextResponse.json<TApiResponse>(

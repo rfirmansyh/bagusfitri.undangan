@@ -19,7 +19,11 @@ const PUBLIC_WISHES_LIMIT = 10;
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, message } = body as { name?: string; message?: string };
+    const { name, message, signature } = body as {
+      name?: string;
+      message?: string;
+      signature?: string;
+    };
 
     // Validate input
     const trimmedName = name?.trim() ?? '';
@@ -44,6 +48,22 @@ export async function POST(request: NextRequest) {
 
     // Insert into D1
     const db = await getD1Database();
+
+    // Validate guestbook signature if provided
+    if (signature) {
+      const guestbook = await db
+        .prepare('SELECT id FROM guestbooks WHERE signature = ?')
+        .bind(signature)
+        .first();
+
+      if (!guestbook) {
+        return NextResponse.json<TApiResponse>(
+          { success: false, error: 'Undangan tidak valid. Pastikan Anda mengakses melalui link undangan resmi.' },
+          { status: 403 },
+        );
+      }
+    }
+
     const id = crypto.randomUUID();
     const createdAt = new Date().toISOString();
 

@@ -47,3 +47,15 @@ export const adminLoginValidation = yup.object({
 });
 
 export type TAdminLoginForm = yup.InferType<typeof adminLoginValidation>;
+
+// ─── Guestbook Validation ───────────────────────────────────────
+export const createGuestbookValidation = yup.object({
+  name: yup
+    .string()
+    .trim()
+    .required('Nama tamu wajib diisi')
+    .min(1, 'Nama tamu wajib diisi')
+    .max(120, 'Nama tamu maksimal 120 karakter'),
+});
+
+export type TCreateGuestbookForm = yup.InferType<typeof createGuestbookValidation>;

@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const password = searchParams.get('password') ?? '';
-    assertAdminPassword(password);
+    await assertAdminPassword(password);
 
     const db = await getD1Database();
 

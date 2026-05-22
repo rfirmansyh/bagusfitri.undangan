@@ -98,3 +98,32 @@ export type TWishRow = {
 export type TCountRow = {
   count: number | string;
 };
+
+// ─── Guestbook Types ────────────────────────────────────────────
+export type TGuestbook = {
+  id: string;
+  name: string;
+  signature: string;
+  link: string;
+  chatTemplate: string;
+  createdAt: string;
+};
+
+export type TGuestbookRow = {
+  id: string;
+  name: string;
+  signature: string;
+  link: string;
+  chat_template: string;
+  created_at: string;
+};
+
+export type TCreateGuestbookInput = {
+  name: string;
+};
+
+export type TBulkImportResult = {
+  imported: number;
+  skipped: number;
+  errors: string[];
+};

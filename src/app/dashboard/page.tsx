@@ -13,7 +13,8 @@ import type {
   TPaginatedResult,
 } from '@/src/types/app.types';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Eye, EyeOff, LogOut, Trash2, Users, MessageSquare, BarChart3 } from 'lucide-react';
+import { Eye, EyeOff, LogOut, Trash2, Users, MessageSquare, BarChart3, BookOpen } from 'lucide-react';
+import GuestbookTab from './_guestbook-tab';
 import { useForm } from 'react-hook-form';
 
 // ─── Helpers ────────────────────────────────────────────────────
@@ -295,7 +296,8 @@ function WishesTable({
 // ─── Main Dashboard Page ────────────────────────────────────────
 export default function DashboardPage() {
   const [password, setPassword] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'rsvps' | 'wishes'>('rsvps');
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const [activeTab, setActiveTab] = useState<'rsvps' | 'wishes' | 'guestbooks'>('rsvps');
   const [stats, setStats] = useState<TDashboardStats | null>(null);
   const [rsvps, setRsvps] = useState<TAdminRsvp[]>([]);
   const [rsvpPage, setRsvpPage] = useState(1);
@@ -303,6 +305,23 @@ export default function DashboardPage() {
   const [wishes, setWishes] = useState<TAdminWish[]>([]);
   const [wishPage, setWishPage] = useState(1);
   const [wishTotalPages, setWishTotalPages] = useState(1);
+
+  useEffect(() => {
+    const savedPassword = localStorage.getItem('admin_password');
+    if (savedPassword) {
+      setPassword(savedPassword);
+    }
+    setIsCheckingAuth(false);
+  }, []);
+
+  const handleSetPassword = (pw: string | null) => {
+    setPassword(pw);
+    if (pw) {
+      localStorage.setItem('admin_password', pw);
+    } else {
+      localStorage.removeItem('admin_password');
+    }
+  };
 
   const fetchStats = useCallback(async (pw: string) => {
     const res = await fetch(`/api/admin/stats?password=${encodeURIComponent(pw)}`);
@@ -370,13 +389,22 @@ export default function DashboardPage() {
     fetchStats(password);
   };
 
+  if (isCheckingAuth) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent"></div>
+      </div>
+    );
+  }
+
   if (!password) {
-    return <LoginForm onLogin={setPassword} />;
+    return <LoginForm onLogin={handleSetPassword} />;
   }
 
   const tabs = [
     { key: 'rsvps' as const, label: 'RSVP', icon: Users },
     { key: 'wishes' as const, label: 'Ucapan', icon: MessageSquare },
+    { key: 'guestbooks' as const, label: 'Buku Tamu', icon: BookOpen },
   ];
 
   return (
@@ -390,7 +418,7 @@ export default function DashboardPage() {
             </div>
             <h1 className="text-lg font-semibold text-white">Dashboard</h1>
           </div>
-          <Button size="sm" variant="outline" onClick={() => setPassword(null)} className="border-white/10 bg-transparent text-xs text-slate-300 hover:bg-white/10">
+          <Button size="sm" variant="outline" onClick={() => handleSetPassword(null)} className="border-white/10 bg-transparent text-xs text-slate-300 hover:bg-white/10">
             <LogOut className="mr-1.5 h-3.5 w-3.5" /> Keluar
           </Button>
         </div>
@@ -436,6 +464,10 @@ export default function DashboardPage() {
             totalPages={wishTotalPages}
             onPageChange={(p) => password && fetchWishes(password, p)}
           />
+        )}
+
+        {activeTab === 'guestbooks' && (
+          <GuestbookTab password={password} />
         )}
       </main>
     </div>
