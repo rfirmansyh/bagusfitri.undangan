@@ -1,8 +1,8 @@
 'use client';
 
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, Ref, useEffect } from 'react';
 
-const LayoutMobile = ({ children }: { children: ReactNode }) => {
+const LayoutMobile = ({ ref, children }: { ref: Ref<HTMLDivElement>, children: ReactNode }) => {
   useEffect(() => {
     const resizeWorkspace = function resizeWorkspace() {
       console.log('resizing');
@@ -62,7 +62,7 @@ const LayoutMobile = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <div id="workspace">
+    <div ref={ref} id="workspace">
       <div id="zoom">
         <div className="flex h-full w-full items-center justify-center">
           <div id="canvas" className="absolute">

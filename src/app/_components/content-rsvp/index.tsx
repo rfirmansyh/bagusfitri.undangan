@@ -43,7 +43,7 @@ const ContentRsvp = ({ form, submitHandler }: ContentRsvpProps) => {
               className="block rounded-[4px] bg-white"
             />
             <Controller
-              name="status"
+              name="guests"
               control={form.control}
               render={({ field }) => (
                 <Select

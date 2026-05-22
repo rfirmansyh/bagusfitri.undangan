@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/src/components/ui/dialog';
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/src/components/ui/item';
@@ -24,6 +24,10 @@ import ContentRsvp from './_components/content-rsvp';
 import ContentStory from './_components/content-story';
 import LayoutMobile from './_components/layout-mobile';
 import ContentOpening from './_components/opening';
+import { useGSAP } from '@gsap/react';
+import gsap from "gsap";
+
+gsap.registerPlugin(useGSAP);
 
 function formatWishDate(value: string) {
   return new Intl.DateTimeFormat('id-ID', {
@@ -34,6 +38,11 @@ function formatWishDate(value: string) {
 }
 
 export default function Home() {
+  const audio = useRef<HTMLAudioElement>(null!);
+  const containerRef = useRef<HTMLDivElement>(null!)
+
+  const [isOpened, setIsOpened] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [showWishes, setShowWishes] = useState(false);
   const [publicWishes, setPublicWishes] = useState<TPublicWish[]>([]);
   const [loadingWishes, setLoadingWishes] = useState(false);
@@ -44,7 +53,7 @@ export default function Home() {
     resolver: yupResolver(createRsvpValidation),
     defaultValues: {
       name: '',
-      guests: 0,
+      guests: 1,
     },
   });
 
@@ -127,6 +136,34 @@ export default function Home() {
     }
   }, []);
 
+  const { contextSafe } = useGSAP(() => {
+
+  }, { scope: containerRef });
+
+  const handlePlay = () => {
+    if (isPlaying) {
+      audio.current.pause();
+      setIsPlaying(false);
+    } else {
+      audio.current.play();
+      setIsPlaying(true);
+    }
+  };
+  const handleOpen = contextSafe(() => {
+    gsap.to('#content-opening', {
+      yPercent: -100,
+      onComplete: () => {
+        setIsOpened(true);
+        handlePlay()
+
+        const canvas = document.getElementById('canvas');
+        if (canvas) canvas.style.overflowY = 'auto';
+
+        // gsap.set("#canvas", {autoAlpha: 0, overflowY: 'auto'})
+      },
+    })
+  })
+
   useEffect(() => {
     if (showWishes) {
       fetchWishes(0);
@@ -134,8 +171,8 @@ export default function Home() {
   }, [showWishes, fetchWishes]);
 
   return (
-    <LayoutMobile>
-      <ContentOpening />
+    <LayoutMobile ref={containerRef}>
+      <ContentOpening onClick={handleOpen} />
       <ContentIntro />
       <ContentBride />
       <ContentGroom />
@@ -150,6 +187,9 @@ export default function Home() {
       />
       <ContentClosing />
 
+      <audio ref={audio} className="hidden opacity-0 w-0 h-0">
+        <source src="/audio.mp3" type="audio/mp3" />
+      </audio>
       <Dialog open={showWishes} onOpenChange={setShowWishes}>
         <DialogContent>
           <DialogHeader>

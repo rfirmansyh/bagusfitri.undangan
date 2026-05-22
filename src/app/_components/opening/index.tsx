@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/src/components/ui/button';
 
 import DecOpeningLeft from './dec-opening-left';
@@ -6,16 +8,26 @@ import DecStar from './dec-start';
 import ImgOpening from './img-opening';
 import TextDate from './text-date';
 
-const ContentOpening = () => {
+type ContentOpeningProps = {
+  onClick: VoidFunction;
+};
+
+const ContentOpening = ({ onClick }: ContentOpeningProps) => {
   return (
-    <div id="opening">
+    <div id="content-opening">
       <div className="relative flex h-full w-full items-center justify-center bg-[#18231D]">
         <DecStar />
         <DecOpeningLeft />
         <DecOpeningRight />
         <ImgOpening />
 
-        <Button variant="2F4539" size="lg" className="absolute bottom-[7%]">
+        <Button
+          id="btn-buka-undangan"
+          variant="2F4539"
+          size="lg"
+          className="absolute bottom-[7%]"
+          onClick={onClick}
+        >
           Buka Undangan
         </Button>
 
