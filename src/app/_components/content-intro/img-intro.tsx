@@ -1,6 +1,7 @@
 const ImgIntro = () => {
   return (
     <svg
+      id="content-intro-img"
       width="65%"
       viewBox="0 0 556 818"
       fill="none"

@@ -5,8 +5,8 @@ import { DATA } from '@/src/constant/data.constant';
 
 const ContentClosing = () => {
   return (
-    <section id="content-closing" className="relative h-full w-full text-[#EEF1F0]!">
-      <div className="relative h-full w-full overflow-hidden text-[#EEF1F0]!">
+    <section id="content-closing" className="relative h-full w-full text-[#EEF1F0]! overflow-hidden">
+      <div id="img-closing" className="relative h-full w-full overflow-hidden text-[#EEF1F0]!">
         <Image
           loading="lazy"
           src={ImgClosing}

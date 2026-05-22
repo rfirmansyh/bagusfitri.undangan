@@ -1,6 +1,7 @@
 const DecStar = () => {
   return (
     <svg
+      id="dec-star"
       width="82%"
       viewBox="0 0 823 518"
       fill="none"

@@ -1,6 +1,7 @@
 const DecOpeningRight = () => {
   return (
     <svg
+      id="dec-opening-right"
       height="100%"
       viewBox="0 0 215 768"
       fill="none"

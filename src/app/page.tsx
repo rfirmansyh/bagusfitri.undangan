@@ -13,60 +13,24 @@ import { toast } from 'sonner';
 
 import { Avatar, AvatarFallback } from '../components/ui/avatar';
 import { Button } from '../components/ui/button';
-// import ContentBride from './_components/content-bride';
-// import ContentClosing from './_components/content-closing';
-// import ContentDate from './_components/content-date';
-// import ContentGift from './_components/content-gift';
-// import ContentGroom from './_components/content-groom';
-// import ContentIntro from './_components/content-intro';
-// import ContentPray from './_components/content-pray';
-// import ContentRsvp from './_components/content-rsvp';
-// import ContentStory from './_components/content-story';
+import ContentBride from './_components/content-bride';
+import ContentClosing from './_components/content-closing';
+import ContentDate from './_components/content-date';
+import ContentGift from './_components/content-gift';
+import ContentGroom from './_components/content-groom';
+import ContentIntro from './_components/content-intro';
+import ContentPray from './_components/content-pray';
+import ContentRsvp from './_components/content-rsvp';
+import ContentStory from './_components/content-story';
 import LayoutMobile from './_components/layout-mobile';
 import ContentOpening from './_components/opening';
 import { useGSAP } from '@gsap/react';
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { QueryClient, QueryClientProvider, useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import dynamic from 'next/dynamic';
+import { useSearchParams } from 'next/navigation';
 
-const ContentIntro = dynamic(() => import('./_components/content-intro'), {
-  ssr: false,
-  loading: () => <div className="flex h-full w-full items-center justify-center">Loading...</div>,
-});
-const ContentBride = dynamic(() => import('./_components/content-bride'), {
-  ssr: false,
-  loading: () => <div className="flex h-full w-full items-center justify-center">Loading...</div>,
-});
-const ContentGroom = dynamic(() => import('./_components/content-groom'), {
-  ssr: false,
-  loading: () => <div className="flex h-full w-full items-center justify-center">Loading...</div>,
-});
-const ContentDate = dynamic(() => import('./_components/content-date'), {
-  ssr: false,
-  loading: () => <div className="flex h-full w-full items-center justify-center">Loading...</div>,
-});
-const ContentStory = dynamic(() => import('./_components/content-story'), {
-  ssr: false,
-  loading: () => <div className="flex h-full w-full items-center justify-center">Loading...</div>,
-});
-const ContentRsvp = dynamic(() => import('./_components/content-rsvp'), {
-  ssr: false,
-  loading: () => <div className="flex h-full w-full items-center justify-center">Loading...</div>,
-});
-const ContentGift = dynamic(() => import('./_components/content-gift'), {
-  ssr: false,
-  loading: () => <div className="flex h-full w-full items-center justify-center">Loading...</div>,
-});
-const ContentPray = dynamic(() => import('./_components/content-pray'), {
-  ssr: false,
-  loading: () => <div className="flex h-full w-full items-center justify-center">Loading...</div>,
-});
-const ContentClosing = dynamic(() => import('./_components/content-closing'), {
-  ssr: false,
-  loading: () => <div className="flex h-full w-full items-center justify-center">Loading...</div>,
-});
-
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 function formatWishDate(value: string) {
   return new Intl.DateTimeFormat('id-ID', {
@@ -86,6 +50,13 @@ const queryClient = new QueryClient({
 });
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <QueryClientProvider client={queryClient}>
       <HomeContent />
@@ -94,6 +65,8 @@ export default function Home() {
 }
 
 function HomeContent() {
+  const searchParams = useSearchParams();
+  
   const audio = useRef<HTMLAudioElement>(null!);
   const containerRef = useRef<HTMLDivElement>(null!);
 
@@ -197,7 +170,199 @@ function HomeContent() {
   const loadingWishes = isLoading || isFetchingNextPage;
   const hasMoreWishes = hasNextPage;
 
-  const { contextSafe } = useGSAP(() => {}, { scope: containerRef });
+  const { contextSafe } = useGSAP(() => {
+    gsap.set('#dec-opening-left', {
+      xPercent: -100,
+      opacity: 0,
+    })
+    gsap.to('#dec-opening-left', {
+      xPercent: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: 'sine.inOut',
+    });
+    gsap.set('#dec-opening-right', {
+      xPercent: 100,
+      opacity: 0,
+    })
+    gsap.to('#dec-opening-right', {
+      xPercent: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: 'sine.inOut',
+    });
+    gsap.set('#img-opening', {
+      yPercent: -100,
+      opacity: 0,
+    })
+    gsap.to('#img-opening', {
+      yPercent: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: 'sine.inOut',
+    });
+    gsap.set('#dec-star', {
+      yPercent: 100,
+      opacity: 0,
+    })
+    gsap.to('#dec-star', {
+      yPercent: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: 'sine.inOut',
+    });
+
+    gsap.to('#content-intro-img', {
+      x: 'random(-4, 4)',
+      y: 'random(-4, 4)',
+      rotation: 'random(-1.5, 1.5)',
+      duration: 0.6,
+      repeat: -1,
+      repeatRefresh: true,
+      ease: 'sine.inOut',
+    });
+
+    gsap.set('#content-bride-img', {
+      opacity: 0,
+      xPercent: -140,
+    })
+    gsap.to('#content-bride-img', {
+      scrollTrigger: {
+        trigger: '#content-bride',
+        start: 'top 90%',
+        scroller: '#canvas',
+        // toggleActions: 'play none none reverse',
+      },
+      duration: 1,
+      xPercent: 0,
+      opacity: 1,
+      ease: 'power2.out',
+    });
+    gsap.set('#content-bride-text', {
+      opacity: 0,
+      yPercent: 140,
+    })
+    gsap.to('#content-bride-text', {
+      scrollTrigger: {
+        trigger: '#content-bride',
+        start: 'top 50%',
+        scroller: '#canvas',
+        // toggleActions: 'play none none reverse',
+      },
+      duration: 1,
+      yPercent: 0,
+      opacity: 1,
+      ease: 'power2.out',
+    });
+
+    gsap.set('#content-groom-img', {
+      opacity: 0,
+      xPercent: 140,
+    })
+    gsap.to('#content-groom-img', {
+      scrollTrigger: {
+        trigger: '#content-groom',
+        start: 'top 100%',
+        scroller: '#canvas',
+        // toggleActions: 'play none none reverse',
+      },
+      duration: 1,
+      xPercent: 0,
+      opacity: 1,
+      ease: 'power2.out',
+    });
+    gsap.set('#content-groom-text', {
+      opacity: 0,
+      yPercent: 140,
+    })
+    gsap.to('#content-groom-text', {
+      scrollTrigger: {
+        trigger: '#content-groom',
+        start: 'top 100%',
+        scroller: '#canvas',
+        // toggleActions: 'play none none reverse',
+      },
+      duration: 1,
+      yPercent: 0,
+      opacity: 1,
+      ease: 'power2.out',
+    });
+
+    gsap.set('#dec-story', {
+      x: 50,
+      opacity: 0,
+    })
+    gsap.to('#dec-story', {
+      x: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: 'sine.inOut',
+      scrollTrigger: {
+        trigger: '#content-story',
+        start: 'top 200%',
+        scroller: '#canvas',
+        toggleActions: 'play none none reverse',
+      },
+    });
+
+    gsap.set('#img-rsvp', {
+      yPercent: 50,
+      opacity: 0,
+    })
+    gsap.to('#img-rsvp', {
+      yPercent: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: 'sine.inOut',
+      scrollTrigger: {
+        trigger: '#content-rsvp',
+        start: 'top 300%',
+        scroller: '#canvas',
+        toggleActions: 'play none none reverse',
+      },
+    });
+
+    gsap.set('#img-love', {
+      yPercent: 50,
+      opacity: 0,
+    })
+    gsap.to('#img-love', {
+      yPercent: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: 'sine.inOut',
+      scrollTrigger: {
+        trigger: '#content-gift',
+        start: 'top 400%',
+        scroller: '#canvas',
+        toggleActions: 'play none none reverse',
+      },
+    });
+
+    gsap.to('#img-pray', {
+      rotation: 'random(-2, 2)',
+      duration: 0.6,
+      repeat: -1,
+      repeatRefresh: true,
+    });
+
+    gsap.set('#img-closing', {
+      yPercent: -50,
+      opacity: 0,
+    })
+    gsap.to('#img-closing', {
+      yPercent: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: 'sine.inOut',
+      scrollTrigger: {
+        trigger: '#content-closing',
+        start: 'top 450%',
+        scroller: '#canvas',
+        toggleActions: 'play none none reverse',
+      },
+    });
+  }, { scope: containerRef });
 
   const handlePlay = () => {
     if (isPlaying) {
@@ -238,13 +403,17 @@ function HomeContent() {
 
         const canvas = document.getElementById('canvas');
         if (canvas) canvas.style.overflowY = 'auto';
+
+        // Refresh ScrollTrigger to calculate offsets correctly after element displays block/scroll
+        ScrollTrigger.refresh();
       },
     });
   });
 
+
   return (
     <LayoutMobile ref={containerRef}>
-      <ContentOpening onClick={handleOpen} />
+      <ContentOpening guestName={searchParams.get('kepada') || 'Tamu Undangan'} onClick={handleOpen} />
       <ContentIntro />
       <ContentBride />
       <ContentGroom />

@@ -1,6 +1,7 @@
 const ImgRsvp = () => {
   return (
     <svg
+      id="img-rsvp"
       width="75%"
       viewBox="0 0 652 295"
       fill="none"

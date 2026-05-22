@@ -1,6 +1,7 @@
 const DecStory = () => {
   return (
     <svg
+      id="dec-story"
       width="120"
       viewBox="0 0 321 344"
       fill="none"

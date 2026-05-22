@@ -12,7 +12,7 @@ export const DATA = {
   PLACE_AKAD_LABEL: 'KUA Sumbersari',
   PLACE_AKAD_DETAIL:
     'Jl. Bengawan Solo No.2, Tegal Boto Lor, Sumbersari, Kec. Sumbersari, Kabupaten Jember, Jawa Timur 68124',
-  PLACE_AKAD_MAPS: 'https://maps.app.goo.gl/wu4q4aq8ZgTy4PY6A',
+  PLACE_AKAD_MAPS: 'https://maps.app.goo.gl/GuH3vTV7HgUbarGE6?g_st=aw',
 
   PLACE_RECEPTION_DETAIL:
     'Gang Doho Perumahan Bukit Permai blok i13, Kec. Sumbersari, Kabupaten Jember, Jawa Timur 68124',

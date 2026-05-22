@@ -8,7 +8,7 @@ const ContentStory = () => {
   return (
     <section
       id="content-story"
-      className="relative h-full w-full bg-[#2C4037] text-center text-white!"
+      className="relative h-full w-full bg-[#2C4037] text-center text-white! overflow-hidden"
     >
       <Image
         loading='lazy'

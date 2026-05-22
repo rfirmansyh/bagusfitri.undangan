@@ -65,7 +65,7 @@ const LayoutMobile = ({ ref, children }: { ref?: Ref<HTMLDivElement>, children: 
     <div ref={ref} id="workspace">
       <div id="zoom">
         <div className="flex h-full w-full items-center justify-center">
-          <div id="canvas" className="absolute">
+          <div id="canvas" className="absolute h-screen">
             <main className="main h-full w-full" id="main-content">
               {children}
             </main>

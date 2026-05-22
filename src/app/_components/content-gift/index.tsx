@@ -15,7 +15,7 @@ const ContentGift = () => {
       <div className="mx-auto flex max-w-[312px] flex-col gap-y-[24px] py-[32px] text-center">
         <h2 className="font-mono text-[24px]">Love Gift</h2>
 
-        <div className="relative h-[191px] w-[312px]">
+        <div id="img-love" className="relative h-[191px] w-[312px]">
           <Image loading='lazy' src={ImgGift} alt="" style={{ objectFit: 'contain' }} />
         </div>
 
