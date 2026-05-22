@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import localFont from 'next/font/local';
 
+import { Toaster } from '@/src/components/ui/sonner';
+
 import { DATA } from '../constant/data.constant';
 import { cn } from '../lib/utils';
 import './globals.css';
@@ -58,7 +60,10 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="32x32" />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
-      <body className={`${poppins.variable} ${histeagin.variable} antialiased`}>{children}</body>
+      <body className={`${poppins.variable} ${histeagin.variable} antialiased`}>
+        {children}
+        <Toaster richColors position="top-center" />
+      </body>
     </html>
   );
 }

@@ -10,7 +10,11 @@
 		"deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
 		"upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
 		"preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-		"cf-typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts"
+		"cf-typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts",
+		"d1:migrate:local": "wrangler d1 migrations apply kondangan --local",
+		"d1:migrate:remote": "wrangler d1 migrations apply kondangan --remote",
+		"d1:reset:local": "wrangler d1 execute kondangan --local --command \"DELETE FROM rsvps; DELETE FROM wishes;\"",
+		"d1:reset:remote": "wrangler d1 execute kondangan --remote --command \"DELETE FROM rsvps; DELETE FROM wishes;\""
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.2.2",
