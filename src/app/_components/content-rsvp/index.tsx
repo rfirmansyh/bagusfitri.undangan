@@ -66,7 +66,7 @@ const ContentRsvp = ({ form, submitHandler }: ContentRsvpProps) => {
                 </Select>
               )}
             />
-            <Button variant="2F4539" className="w-auto max-w-[82px]">
+            <Button disabled={form.formState.isSubmitting} variant="2F4539" className="w-auto max-w-[82px]">
               Kirim
             </Button>
           </div>

@@ -5,7 +5,7 @@ import { type VariantProps, cva } from 'class-variance-authority';
 import { Slot } from 'radix-ui';
 
 const buttonVariants = cva(
-  'rounded-[4px] font-normal flex items-center justify-center cursor-pointer transition-all duration-300 ease-in-out',
+  'rounded-[4px] font-normal flex items-center justify-center cursor-pointer transition-all duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed',
   {
     variants: {
       variant: {

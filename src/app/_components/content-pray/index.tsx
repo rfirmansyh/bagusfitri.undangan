@@ -42,11 +42,11 @@ const ContentPray = ({ form, submitHandler, onClickSee }: ContentPrayProps) => {
             />
 
             <div className="flex w-full flex-col gap-[6px]">
-              <Button type="submit" variant="2F4539">
+              <Button disabled={form.formState.isSubmitting} type="submit" variant="2F4539">
                 Kirim
               </Button>
               <hr className="opacity-30" />
-              <Button type="button" variant="outline" onClick={onClickSee}>
+              <Button disabled={form.formState.isSubmitting} type="button" variant="outline" onClick={onClickSee}>
                 Lihat Ucapan
               </Button>
             </div>
