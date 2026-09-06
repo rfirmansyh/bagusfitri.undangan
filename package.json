@@ -11,10 +11,10 @@
 		"upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
 		"preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
 		"cf-typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts",
-		"d1:migrate:local": "wrangler d1 migrations apply kondangan --local",
-		"d1:migrate:remote": "wrangler d1 migrations apply kondangan --remote",
-		"d1:reset:local": "wrangler d1 execute kondangan --local --command \"DELETE FROM rsvps; DELETE FROM wishes; DELETE FROM guestbooks;\"",
-		"d1:reset:remote": "wrangler d1 execute kondangan --remote --command \"DELETE FROM rsvps; DELETE FROM wishes; DELETE FROM guestbooks;\""
+		"d1:migrate:local": "wrangler d1 migrations apply bagusfitri --local",
+		"d1:migrate:remote": "wrangler d1 migrations apply bagusfitri --remote",
+		"d1:reset:local": "wrangler d1 execute bagusfitri --local --command \"DELETE FROM rsvps; DELETE FROM wishes; DELETE FROM guestbooks;\"",
+		"d1:reset:remote": "wrangler d1 execute bagusfitri --remote --command \"DELETE FROM rsvps; DELETE FROM wishes; DELETE FROM guestbooks;\""
 	},
 	"dependencies": {
 		"@gsap/react": "^2.1.2",
